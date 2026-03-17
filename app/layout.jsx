@@ -1,9 +1,9 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "Ansley | AI for Concrete Cutting Companies",
+  title: "Ansley | The Back Office for Concrete Cutting Companies",
   description:
-    "The AI operating system that answers your calls, sends quotes in 60 seconds, and runs your back office.",
+    "The automated back office that answers your calls, sends quotes in 60 seconds, and runs your operations.",
 };
 
 export default function RootLayout({ children }) {
