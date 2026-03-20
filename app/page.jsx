@@ -35,7 +35,7 @@ export default function Page() {
 
   useEffect(() => { setHeroVis(true); const h = () => setScrollY(window.scrollY); window.addEventListener("scroll", h, { passive: true }); return () => window.removeEventListener("scroll", h); }, []);
 
-  const r1=useReveal(),r2=useReveal(),r3=useReveal(),r4=useReveal(),r5=useReveal(),r6=useReveal(),r7=useReveal();
+  const r1=useReveal(),r2=useReveal(),r3=useReveal(),r4=useReveal(),r5=useReveal(),r6=useReveal(),r7=useReveal(),r8=useReveal();
 
   return (<>
     <style jsx global>{`
@@ -68,13 +68,6 @@ export default function Page() {
     {/* ═══ HERO ═══ */}
     <section style={{paddingTop:120,paddingBottom:0,background:`linear-gradient(180deg, ${C.bgOff} 0%, ${C.bg} 100%)`}}>
       <div style={{maxWidth:1060,margin:"0 auto",padding:"0 28px"}}>
-
-        {/* Industry badge — BIG and prominent */}
-        <div style={rs(heroVis,.05)}>
-          <div style={{display:"inline-flex",alignItems:"center",gap:8,background:C.dark,color:"white",padding:"8px 18px",borderRadius:100,fontSize:13,fontWeight:600,marginBottom:28}}>
-            🏗️ Built exclusively for concrete cutting &amp; coring companies
-          </div>
-        </div>
 
         {/* Two-line headline */}
         <h1 className="hero-h" style={{...rs(heroVis,.15),fontSize:"clamp(34px,5vw,54px)",fontWeight:800,lineHeight:1.12,letterSpacing:"-2px",maxWidth:720,marginBottom:8,color:C.dark}}>
@@ -290,10 +283,55 @@ export default function Page() {
       </div>
     </section>
 
+    {/* ═══ PRICING ═══ */}
+    <section ref={r7.ref} style={{borderTop:`1px solid ${C.border}`}}>
+      <div className="sec">
+        <div style={{...rs(r7.v),textAlign:"center",marginBottom:48}}>
+          <h2 style={{fontSize:"clamp(26px,3.5vw,38px)",fontWeight:700,letterSpacing:"-1.5px",color:C.dark,marginBottom:10}}>
+            Less than an office hire. More than one could ever do.
+          </h2>
+        </div>
+        <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,maxWidth:940,margin:"0 auto"}}>
+          {[
+            {name:"Solo Operator",price:"$2,500",per:"/mo",rev:"For companies doing $800K – $1.5M",features:["24/7 AI call answering","Auto-quoting engine","Invoice automation","Payment follow-ups","Basic job tracking","Monthly summary report"],hi:false},
+            {name:"Growing Fleet",price:"$3,500",per:"/mo",rev:"For companies doing $1.5M – $5M",features:["Everything in Solo Operator","Job costing + margin analysis","GC scorecards + intelligence","Quote win/loss analytics","Crew dispatch system","Detailed monthly analytics"],hi:true},
+            {name:"Multi-Crew",price:"$5,000",per:"/mo",rev:"For companies doing $5M – $10M+",features:["Everything in Growing Fleet","Institutional knowledge base","Multi-crew dispatch optimization","Supply tracking + reorder alerts","Custom integrations","Priority support line"],hi:false},
+          ].map((tier,i)=>(
+            <div key={i} style={{
+              ...rs(r7.v,i*.1),
+              background:tier.hi?"linear-gradient(165deg,rgba(233,69,96,.06),rgba(233,69,96,.01))":C.bg,
+              border:tier.hi?`2px solid ${C.accent}`:`1px solid ${C.border}`,
+              borderRadius:14,padding:"36px 28px",display:"flex",flexDirection:"column",
+              position:"relative",boxShadow:"0 1px 6px rgba(0,0,0,.03)",
+            }}>
+              {tier.hi&&<span className="mono" style={{position:"absolute",top:14,right:14,background:C.accent,color:"white",padding:"3px 10px",borderRadius:100,fontSize:10,fontWeight:700,letterSpacing:"1px",textTransform:"uppercase"}}>Most Popular</span>}
+              <div style={{fontSize:18,fontWeight:700,color:C.dark,marginBottom:3}}>{tier.name}</div>
+              <div style={{fontSize:13,color:C.muted,marginBottom:20}}>{tier.rev}</div>
+              <div style={{display:"flex",alignItems:"baseline",gap:4,marginBottom:28}}>
+                <span style={{fontSize:40,fontWeight:800,letterSpacing:"-2px",color:C.dark}}>{tier.price}</span>
+                <span style={{fontSize:14,color:C.muted}}>{tier.per}</span>
+              </div>
+              <div style={{flex:1,marginBottom:24}}>
+                {tier.features.map((f,j)=>(
+                  <div key={j} style={{display:"flex",alignItems:"center",gap:10,padding:"8px 0",fontSize:14,color:C.text}}>
+                    <span style={{color:C.accent,flexShrink:0}}>✓</span>{f}
+                  </div>
+                ))}
+              </div>
+              <a href={CONFIG.calendlyUrl} className="cta-p" style={{textAlign:"center",width:"100%",padding:tier.hi?"16px 20px":"14px 20px",fontSize:14,background:tier.hi?C.accent:"transparent",color:tier.hi?"white":C.dark,border:tier.hi?"none":`1.5px solid ${C.border}`}}>Book a Call</a>
+            </div>
+          ))}
+        </div>
+        <p style={{textAlign:"center",fontSize:14,color:C.muted,lineHeight:1.7,maxWidth:580,margin:"36px auto 0"}}>
+          Every engagement starts with a <strong style={{color:C.dark}}>free Revenue Recovery Assessment</strong> — we show you the exact dollar amount you&#39;re leaving on the table before you commit to anything.
+        </p>
+      </div>
+    </section>
+
     {/* ═══ FAQ (tight) ═══ */}
-    <section id="faq" ref={r7.ref}>
+    <section id="faq" ref={r8.ref}>
       <div className="sec-t">
-        <div style={{...rs(r7.v),textAlign:"center",marginBottom:40}}>
+        <div style={{...rs(r8.v),textAlign:"center",marginBottom:40}}>
           <h2 style={{fontSize:"clamp(24px,3vw,34px)",fontWeight:700,letterSpacing:"-1px",color:C.dark}}>Common questions.</h2>
         </div>
         {[
