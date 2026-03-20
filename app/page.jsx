@@ -1,60 +1,32 @@
-// ═══════════════════════════════════════════════════════════
-// ANSLEY LANDING PAGE — Next.js App Router
-// Save as: app/page.jsx
-// "use client" required for useState/useEffect
-// Fonts: DM Sans + Space Mono via Google Fonts CSS import
-// No external dependencies beyond React/Next.js
-// ═══════════════════════════════════════════════════════════
-// SEE THE FULL FILE IN THE DOCX VOICE/SMS PROMPTS DOCUMENT
-// This is a reference stub — the full 600+ line React component
-// was delivered in the conversation above. Copy the full component
-// from the chat into this file.
-//
-// TO DEPLOY:
-// 1. npx create-next-app@latest ansley-landing
-// 2. Replace app/page.jsx with this file
-// 3. Replace app/globals.css with minimal reset
-// 4. Replace CONFIG values (Calendly URL, demo phone, email)
-// 5. vercel deploy
-// ═══════════════════════════════════════════════════════════
-
 "use client";
 
 import { useState, useEffect, useRef } from "react";
 
 const CONFIG = {
-  calendlyUrl: "https://calendly.com/gabriel-getansley/30min",
-  demoPhone: "(555) 123-4567",
-  demoPhoneTel: "tel:+15551234567",
+  calendlyUrl: "#",
+  youtubeVideoId: "YOUR_VIDEO_ID",
   email: "hello@getansley.com",
 };
 
 const C = {
-  accent: "#e94560", accentHover: "#d63a54", dark: "#08080d", nearBlack: "#0e0e15",
-  card: "#14141e", light: "#f0eff4", muted: "#7c7c8e", mutedLight: "#a0a0b0",
-  border: "rgba(255,255,255,0.06)", borderHover: "rgba(233,69,96,0.25)",
-  accentGlow: "rgba(233,69,96,0.15)",
+  accent: "#e94560", accentHover: "#d63a54", accentLight: "#fef2f4", accentBorder: "#fcd5dc",
+  bg: "#ffffff", bgOff: "#f7f7fa", dark: "#111118", text: "#1a1a2e",
+  muted: "#5c5c6e", mutedLight: "#8a8a9a", border: "#e8e8ee",
+  greenBg: "#f0faf4", greenBorder: "#c6ecd4", green: "#1a8a4a", greenDark: "#16643a",
+  redBg: "#fef2f4", red: "#c23152",
 };
 
 function useReveal() {
   const ref = useRef(null);
-  const [visible, setVisible] = useState(false);
+  const [v, setV] = useState(false);
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => { if (entry.isIntersecting) setVisible(true); },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
-    );
-    if (ref.current) observer.observe(ref.current);
-    return () => observer.disconnect();
+    const o = new IntersectionObserver(([e]) => { if (e.isIntersecting) setV(true); }, { threshold: 0.08, rootMargin: "0px 0px -30px 0px" });
+    if (ref.current) o.observe(ref.current);
+    return () => o.disconnect();
   }, []);
-  return { ref, visible };
+  return { ref, v };
 }
-
-const rs = (visible, delay = 0) => ({
-  opacity: visible ? 1 : 0,
-  transform: visible ? "translateY(0)" : "translateY(30px)",
-  transition: `all 0.7s cubic-bezier(0.25,0.46,0.45,0.94) ${delay}s`,
-});
+const rs = (v, d = 0) => ({ opacity: v ? 1 : 0, transform: v ? "translateY(0)" : "translateY(24px)", transition: `all 0.65s cubic-bezier(0.25,0.46,0.45,0.94) ${d}s` });
 
 export default function Page() {
   const [scrollY, setScrollY] = useState(0);
@@ -63,198 +35,315 @@ export default function Page() {
 
   useEffect(() => { setHeroVis(true); const h = () => setScrollY(window.scrollY); window.addEventListener("scroll", h, { passive: true }); return () => window.removeEventListener("scroll", h); }, []);
 
-  const s1=useReveal(), s2=useReveal(), s3=useReveal(), s4=useReveal(), s5=useReveal(), s6=useReveal(), s7=useReveal(), s8=useReveal(), s9=useReveal();
+  const r1=useReveal(),r2=useReveal(),r3=useReveal(),r4=useReveal(),r5=useReveal(),r6=useReveal(),r7=useReveal();
 
   return (<>
     <style jsx global>{`
-      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Oswald:wght@600;700&family=Space+Mono:wght@400;700&display=swap');
-      *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}body{background:${C.dark};color:${C.light};font-family:'DM Sans',sans-serif;overflow-x:hidden}::selection{background:${C.accent};color:white}a{color:inherit;text-decoration:none}
-      .cta-p{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:${C.accent};color:white;padding:18px 40px;font-size:16px;font-weight:600;font-family:'DM Sans',sans-serif;border:none;border-radius:8px;cursor:pointer;text-decoration:none;transition:all .3s ease}.cta-p:hover{background:${C.accentHover};transform:translateY(-2px);box-shadow:0 12px 40px ${C.accentGlow}}
-      .cta-s{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:transparent;color:${C.light};padding:17px 36px;font-size:15px;font-weight:500;font-family:'DM Sans',sans-serif;border:1.5px solid rgba(255,255,255,.15);border-radius:8px;cursor:pointer;text-decoration:none;transition:all .3s ease}.cta-s:hover{border-color:${C.accent};color:${C.accent}}
-      .mono{font-family:'Space Mono',monospace}.tag{display:inline-block;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${C.accent}}
-      .sec{max-width:1140px;margin:0 auto;padding:120px 28px}.sec-t{max-width:860px;margin:0 auto;padding:120px 28px}
-      @media(max-width:900px){.g3{grid-template-columns:1fr!important}.g4{grid-template-columns:1fr 1fr!important}.g2{grid-template-columns:1fr!important}.sec,.sec-t{padding:72px 20px}.hm{display:none!important}}
-      @media(max-width:600px){.g4{grid-template-columns:1fr!important}}
-      @keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+      @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800&family=Space+Mono:wght@400;700&display=swap');
+      *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+      html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+      body{background:${C.bg};color:${C.text};font-family:'DM Sans',sans-serif;overflow-x:hidden}
+      ::selection{background:${C.accent};color:white}a{color:inherit;text-decoration:none}
+      .cta-p{display:inline-flex;align-items:center;justify-content:center;gap:8px;background:${C.accent};color:white;padding:18px 40px;font-size:16px;font-weight:600;font-family:'DM Sans',sans-serif;border:none;border-radius:8px;cursor:pointer;text-decoration:none;transition:all .3s ease}
+      .cta-p:hover{background:${C.accentHover};transform:translateY(-2px);box-shadow:0 8px 32px rgba(233,69,96,.25)}
+      .mono{font-family:'Space Mono',monospace}
+      .tag{display:inline-block;font-family:'Space Mono',monospace;font-size:11px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:${C.accent}}
+      .sec{max-width:1060px;margin:0 auto;padding:96px 28px}
+      .sec-t{max-width:820px;margin:0 auto;padding:96px 28px}
+      @media(max-width:900px){.g3{grid-template-columns:1fr!important}.g4{grid-template-columns:1fr 1fr!important}.g2{grid-template-columns:1fr!important}.sec,.sec-t{padding:56px 20px}.hm{display:none!important}.ps-grid{grid-template-columns:1fr!important}}
+      @media(max-width:600px){.g4{grid-template-columns:1fr!important}.hero-h{font-size:32px!important}}
     `}</style>
 
-    {/* NAV */}
-    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:1000,background:scrollY>60?"rgba(8,8,13,.92)":"transparent",backdropFilter:scrollY>60?"blur(24px)":"none",borderBottom:scrollY>60?`1px solid ${C.border}`:"1px solid transparent",transition:"all .4s ease",padding:"0 28px"}}>
-      <div style={{maxWidth:1140,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",height:72}}>
-        <div style={{display:"flex",alignItems:"center",gap:10}}>
-          <svg width="30" height="34" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 1C15 1 2 4 2 8v10c0 8 6.5 13 13 15 6.5-2 13-7 13-15V8c0-4-13-7-13-7z" stroke={C.light} strokeWidth="2.2" fill="none"/></svg>
-          <span style={{fontFamily:"'Oswald',sans-serif",fontWeight:700,fontSize:22,letterSpacing:"1.5px",textTransform:"uppercase"}}>Ansley</span>
+    {/* ═══ NAV ═══ */}
+    <nav style={{position:"fixed",top:0,left:0,right:0,zIndex:1000,background:scrollY>50?"rgba(255,255,255,.97)":"transparent",backdropFilter:scrollY>50?"blur(16px)":"none",borderBottom:scrollY>50?`1px solid ${C.border}`:"1px solid transparent",transition:"all .35s ease",padding:"0 28px"}}>
+      <div style={{maxWidth:1060,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",height:64}}>
+        <div style={{display:"flex",alignItems:"center",gap:9}}>
+          <div style={{width:30,height:30,background:C.accent,borderRadius:6,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:"white",fontWeight:800,fontSize:15}}>A</span></div>
+          <span style={{fontWeight:700,fontSize:19,letterSpacing:"-.5px",color:C.dark}}>ansley</span>
         </div>
-        <div style={{display:"flex",alignItems:"center",gap:36}}>
-          {["How It Works","Features","Pricing","FAQ"].map(t=><a key={t} href={`#${t.toLowerCase().replace(/\s/g,"-")}`} className="hm" style={{color:C.muted,fontSize:14,fontWeight:500,transition:"color .2s"}}>{t}</a>)}
-          <a href={CONFIG.calendlyUrl} className="cta-p" style={{padding:"10px 24px",fontSize:13}}>Book a Call</a>
-        </div>
+        <a href={CONFIG.calendlyUrl} className="cta-p" style={{padding:"9px 22px",fontSize:13}}>Get Your Free Assessment</a>
       </div>
     </nav>
 
-    {/* HERO */}
-    <section style={{paddingTop:160,paddingBottom:40,position:"relative",overflow:"hidden"}}>
-      <div style={{position:"absolute",top:-200,left:"50%",transform:"translateX(-50%)",width:1000,height:800,background:`radial-gradient(ellipse 60% 50%,${C.accentGlow} 0%,transparent 70%)`,pointerEvents:"none",opacity:.6}}/>
-      <div style={{maxWidth:1140,margin:"0 auto",padding:"0 28px",position:"relative"}}>
-        <div style={rs(heroVis,.1)}><span className="mono" style={{display:"inline-flex",alignItems:"center",gap:8,background:"rgba(233,69,96,.08)",color:C.accent,padding:"7px 16px",borderRadius:100,fontSize:11,fontWeight:700,border:"1px solid rgba(233,69,96,.15)",letterSpacing:"1px",textTransform:"uppercase",marginBottom:32}}><span style={{width:6,height:6,background:C.accent,borderRadius:"50%",animation:"pulse 2s infinite"}}/>Built exclusively for concrete cutting companies</span></div>
-        <h1 style={{...rs(heroVis,.2),fontSize:"clamp(38px,5.8vw,68px)",fontWeight:800,lineHeight:1.05,letterSpacing:"-2.5px",maxWidth:820,marginBottom:28}}>Your back office runs itself.<br/><span style={{color:C.accent}}>You run your crews.</span></h1>
-        <p style={{...rs(heroVis,.35),fontSize:"clamp(16px,1.8vw,19px)",color:C.muted,lineHeight:1.7,maxWidth:580,marginBottom:44}}>Ansley is an automated back office that answers your calls, sends quotes in 60 seconds, invoices automatically, follows up on payments, and tells you which jobs and GCs actually make you money.</p>
-        <div style={{...rs(heroVis,.5),display:"flex",gap:16,flexWrap:"wrap",marginBottom:56}}>
-          <a href={CONFIG.calendlyUrl} className="cta-p" style={{fontSize:17,padding:"20px 44px"}}>Book Your Free Assessment →</a>
-          <a href={CONFIG.demoPhoneTel} className="cta-s">📞 Call the Demo Line</a>
+    {/* ═══ HERO ═══ */}
+    <section style={{paddingTop:120,paddingBottom:0,background:`linear-gradient(180deg, ${C.bgOff} 0%, ${C.bg} 100%)`}}>
+      <div style={{maxWidth:1060,margin:"0 auto",padding:"0 28px"}}>
+
+        {/* Industry badge — BIG and prominent */}
+        <div style={rs(heroVis,.05)}>
+          <div style={{display:"inline-flex",alignItems:"center",gap:8,background:C.dark,color:"white",padding:"8px 18px",borderRadius:100,fontSize:13,fontWeight:600,marginBottom:28}}>
+            🏗️ Built exclusively for concrete cutting &amp; coring companies
+          </div>
         </div>
-        <div style={{...rs(heroVis,.65),display:"flex",alignItems:"center",gap:12}}>
-          <div style={{display:"flex"}}>{[0,1,2,3,4].map(i=><div key={i} style={{width:36,height:36,borderRadius:"50%",background:`linear-gradient(135deg,hsl(${210+i*25},35%,${30+i*6}%),hsl(${210+i*25},35%,${40+i*6}%))`,border:`2.5px solid ${C.dark}`,marginLeft:i>0?-10:0,display:"flex",alignItems:"center",justifyContent:"center",fontSize:12,fontWeight:700,color:"white",zIndex:5-i}}>{"DMJRK"[i]}</div>)}</div>
-          <div><div style={{fontSize:14,fontWeight:600}}>Trusted by cutting companies across the US</div><div style={{fontSize:12,color:C.muted}}>From 2-man crews to multi-state operations</div></div>
+
+        {/* Two-line headline */}
+        <h1 className="hero-h" style={{...rs(heroVis,.15),fontSize:"clamp(34px,5vw,54px)",fontWeight:800,lineHeight:1.12,letterSpacing:"-2px",maxWidth:720,marginBottom:8,color:C.dark}}>
+          Stop doing paperwork at 9pm.
+        </h1>
+        <h1 className="hero-h" style={{...rs(heroVis,.22),fontSize:"clamp(34px,5vw,54px)",fontWeight:800,lineHeight:1.12,letterSpacing:"-2px",maxWidth:720,marginBottom:20,color:C.accent}}>
+          Let Ansley run your back office.
+        </h1>
+
+        {/* Value prop — what it actually does, plainly */}
+        <p style={{...rs(heroVis,.32),fontSize:"clamp(15px,1.6vw,17px)",color:C.muted,lineHeight:1.75,maxWidth:560,marginBottom:12}}>
+          Ansley answers your calls, sends quotes in minutes, invoices the day the job&apos;s done, chases payments, dispatches your crews, tracks your margins, and manages your supplies — automatically.
+        </p>
+
+        {/* Risk reversal — immediately visible */}
+        <p style={{...rs(heroVis,.38),fontSize:14,color:C.green,fontWeight:600,marginBottom:28}}>
+          ✓ AI receptionist goes live Day 1 &nbsp;&nbsp; ✓ Month-to-month, cancel anytime &nbsp;&nbsp; ✓ Free assessment to start
+        </p>
+
+        {/* CTA */}
+        <div style={{...rs(heroVis,.44),marginBottom:20}}>
+          <a href={CONFIG.calendlyUrl} className="cta-p" style={{fontSize:16,padding:"18px 40px"}}>
+            See What You&apos;re Leaving on the Table →
+          </a>
+        </div>
+        <p style={{...rs(heroVis,.48),fontSize:13,color:C.mutedLight,marginBottom:48}}>
+          Free 15-minute call. We show you the numbers. No pitch, no pressure.
+        </p>
+
+        {/* Video */}
+        <div style={{...rs(heroVis,.55),borderRadius:12,overflow:"hidden",border:`1px solid ${C.border}`,position:"relative",paddingBottom:"56.25%",height:0,background:C.bgOff}}>
+          <iframe src={`https://www.youtube.com/embed/${CONFIG.youtubeVideoId}?rel=0&modestbranding=1`} title="Ansley Demo" allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture" allowFullScreen style={{position:"absolute",top:0,left:0,width:"100%",height:"100%",border:"none"}}/>
         </div>
       </div>
     </section>
 
-    {/* DEMO */}
-    <section style={{paddingBottom:40}}><div style={{maxWidth:1140,margin:"0 auto",padding:"0 28px"}}>
-      <div style={{background:`linear-gradient(135deg,${C.card},${C.nearBlack})`,border:`1px solid ${C.border}`,borderRadius:16,padding:"48px 48px 0",overflow:"hidden"}}>
-        <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:48,alignItems:"end"}} className="g2">
-          <div style={{paddingBottom:48}}>
-            <span className="tag" style={{marginBottom:16,display:"block"}}>Live Demo</span>
-            <h3 style={{fontSize:28,fontWeight:700,letterSpacing:"-.5px",marginBottom:12}}>Hear it in action.</h3>
-            <p style={{fontSize:15,color:C.muted,lineHeight:1.7,marginBottom:24}}>Call our demo line right now. A virtual receptionist will answer as a concrete cutting company, capture your job specs, and generate a quote — all in under 2 minutes.</p>
-            <div style={{background:"rgba(233,69,96,.08)",border:"1px solid rgba(233,69,96,.15)",borderRadius:10,padding:"20px 24px",display:"flex",alignItems:"center",gap:16}}>
-              <div style={{width:48,height:48,borderRadius:"50%",background:C.accent,display:"flex",alignItems:"center",justifyContent:"center",flexShrink:0}}>📞</div>
-              <div><div style={{fontSize:13,color:C.muted,marginBottom:2}}>Call the demo line</div><a href={CONFIG.demoPhoneTel} style={{fontSize:22,fontWeight:700,letterSpacing:"-.5px"}}>{CONFIG.demoPhone}</a></div>
-            </div>
-          </div>
-          <div style={{background:`linear-gradient(180deg,rgba(233,69,96,.06),transparent)`,borderRadius:"16px 16px 0 0",border:`1px solid ${C.border}`,borderBottom:"none",padding:"32px 28px",minHeight:320,display:"flex",flexDirection:"column",gap:16}}>
-            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:8}}><div style={{width:10,height:10,borderRadius:"50%",background:"#4ade80"}}/><span style={{fontSize:13,color:C.mutedLight}}>Ansley — Active</span></div>
-            {[{f:"ai",t:"Thanks for calling Precision Concrete Cutting, this is Sarah. How can I help you?"},{f:"c",t:"Hey, I need 6 cores drilled. 4-inch diameter, about 8 inches deep. It's reinforced."},{f:"ai",t:"Got it — 6 cores, 4-inch, 8 inches deep in reinforced concrete. What's the job site address?"},{f:"c",t:"1400 Oak Street, Building C."},{f:"ai",t:"Based on those specs, you're looking at a ballpark of $1,800 to $2,100. I can have a firm quote to you in about 10 minutes. Best email?"}].map((m,i)=><div key={i} style={{alignSelf:m.f==="c"?"flex-end":"flex-start",background:m.f==="c"?"rgba(233,69,96,.15)":"rgba(255,255,255,.05)",borderRadius:m.f==="c"?"12px 12px 4px 12px":"12px 12px 12px 4px",padding:"10px 14px",maxWidth:"85%",fontSize:13,lineHeight:1.5,color:m.f==="c"?C.light:C.mutedLight}}>{m.t}</div>)}
-          </div>
+    {/* ═══ TRUST BAR — right after hero ═══ */}
+    <section style={{background:C.bg,borderBottom:`1px solid ${C.border}`,padding:"32px 28px"}}>
+      <div style={{maxWidth:1060,margin:"0 auto",display:"flex",justifyContent:"center",alignItems:"center",gap:40,flexWrap:"wrap"}}>
+        <div style={{display:"flex",alignItems:"center",gap:6}}>
+          {[1,2,3,4,5].map(i=><span key={i} style={{color:"#f59e0b",fontSize:18}}>★</span>)}
+          <span style={{fontSize:14,fontWeight:600,color:C.dark,marginLeft:4}}>Rated 5/5 by concrete cutting owners</span>
+        </div>
+        <div style={{width:1,height:24,background:C.border}} className="hm"/>
+        <span style={{fontSize:14,color:C.muted}}>AI receptionist live <strong style={{color:C.dark}}>Day 1</strong></span>
+        <div style={{width:1,height:24,background:C.border}} className="hm"/>
+        <span style={{fontSize:14,color:C.muted}}>Month-to-month. <strong style={{color:C.dark}}>Cancel anytime.</strong></span>
+      </div>
+    </section>
+
+    {/* ═══ THE PROBLEM (short, punchy) ═══ */}
+    <section ref={r1.ref}>
+      <div className="sec-t" style={{textAlign:"center"}}>
+        <div style={rs(r1.v)}>
+          <p style={{fontSize:17,color:C.dark,fontWeight:600,lineHeight:1.7,maxWidth:620,margin:"0 auto",marginBottom:12}}>
+            The average contractor owner spends 15-20 hours a week on admin they can&apos;t bill for.
+          </p>
+          <p style={{fontSize:15,color:C.muted,lineHeight:1.7,maxWidth:560,margin:"0 auto"}}>
+            That&apos;s answering calls, writing quotes, sending invoices, chasing checks, texting crews, and tracking supplies — while also running jobs. <strong style={{color:C.dark}}>That&apos;s half your work week gone to paperwork.</strong>
+          </p>
         </div>
       </div>
-    </div></section>
+    </section>
 
-    {/* STATS */}
-    <section ref={s1.ref} style={{background:C.nearBlack}}><div className="sec" style={{paddingTop:80,paddingBottom:80}}>
-      <div className="g4" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:16}}>
-        {[{n:"27%",l:"of contractor calls go unanswered",s:"Invoca Research"},{n:"85%",l:"of missed callers never try again",s:"Industry Data"},{n:"$126K",l:"avg annual revenue lost to missed calls",s:"SMB Study"},{n:"70%",l:"of contractors have 30+ day payment delays",s:"KYRO AI"}].map((st,i)=><div key={i} style={{...rs(s1.visible,i*.1),background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"32px 24px",textAlign:"center"}}><div className="mono" style={{fontSize:"clamp(28px,3.5vw,40px)",fontWeight:700,color:C.accent,marginBottom:8}}>{st.n}</div><div style={{fontSize:14,lineHeight:1.5,marginBottom:6}}>{st.l}</div><div style={{fontSize:11,color:C.muted}}>{st.s}</div></div>)}
-      </div>
-    </div></section>
-
-    {/* PROBLEM */}
-    <section ref={s2.ref}><div className="sec-t">
-      <div style={rs(s2.visible)}>
-        <span className="tag">The Problem</span>
-        <h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14,marginBottom:20}}>You&apos;re working 14-hour days and still can&apos;t keep up.</h2>
-        <p style={{fontSize:17,color:C.muted,lineHeight:1.75,marginBottom:48,maxWidth:620}}>You wake up at 5:30am to check voicemails. You quote from the front seat of your truck. You invoice at 9pm. And every week, jobs walk because you couldn&apos;t pick up the phone while running a saw.</p>
-      </div>
-      {[{i:"📞",t:"Missed calls = missed revenue",d:"A GC calls with a $5K job. You're on a site. Call goes to voicemail. 85% never leave a message. GC calls your competitor.",s:"$52K+/yr from just 2 missed calls/week"},{i:"⏱️",t:"Slow quotes kill your win rate",d:"You scribble specs on a napkin, send a quote 2 days later. The GC already awarded the job to whoever responded first.",s:"Quotes within 2hrs convert at 4x the rate"},{i:"💸",t:"Late invoices strangle cash flow",d:"Jobs completed last week aren't invoiced yet. Net-30 from invoice date means 45-60 days to payment. You're financing GC projects with your cash.",s:"70% of contractors have payment delays 30+ days"},{i:"🧠",t:"Everything lives in your head",d:"Pricing, GC relationships, which buildings are post-tension, who pays slow — none documented. If you're out a week, business stops.",s:"Only 30% of contractors know their overhead numbers"},{i:"📋",t:"No idea which jobs make money",d:"You quote $4,500, crew does the work, nobody tracks blade consumption or overtime. 6% avg margin means a 6% error wipes all profit.",s:"81% don't know accurate labor costs"},{i:"👻",t:"Good GCs go quiet unnoticed",d:"A GC who called monthly hasn't called in 60 days. You don't notice. By the time you do, he's used your competitor for 3 months.",s:"Top 5 GCs likely = 60%+ of your revenue"}].map((p,i)=><div key={i} style={{...rs(s2.visible,.1+i*.08),display:"flex",gap:20,padding:"24px 0",borderBottom:i<5?`1px solid ${C.border}`:"none"}}><span style={{fontSize:28,flexShrink:0,marginTop:2}}>{p.i}</span><div><div style={{fontWeight:600,fontSize:17,marginBottom:6}}>{p.t}</div><div style={{fontSize:15,color:C.muted,lineHeight:1.7,marginBottom:8}}>{p.d}</div><div className="mono" style={{fontSize:12,color:C.accent,fontWeight:600}}>{p.s}</div></div></div>)}
-    </div></section>
-
-    {/* HOW IT WORKS */}
-    <section id="how-it-works" ref={s3.ref} style={{background:C.nearBlack}}><div className="sec">
-      <div style={{...rs(s3.visible),textAlign:"center",marginBottom:64}}><span className="tag">How It Works</span><h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14}}>From phone call to payment. Fully automated.</h2></div>
-      <div style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:20}} className="g2">
-        {[{s:"01",t:"Call comes in",d:"GC calls at 6am, 2pm, or midnight. Ansley answers, captures name, company, specs — diameter, depth, material, location, timeline.",c:C.accent},{s:"02",t:"Quote generates instantly",d:"Your pricing matrix built in. Specs in, branded PDF out. You approve with one tap. Quote hits GC's inbox in under 5 minutes.",c:"#4ade80"},{s:"03",t:"Job scheduled & dispatched",d:"GC confirms → job auto-populates schedule → crew gets digital job card with address, specs, equipment, GPS → GC gets day-before confirmation.",c:"#60a5fa"},{s:"04",t:"Job completes → auto-invoice",d:"Operator marks done, logs time + blade usage. Invoice generates from quote, sends to GC billing email within the hour. Reminders at 15/30/45 days.",c:"#c084fc"},{s:"05",t:"Intelligence builds",d:"Every job feeds scorecards: actual vs quoted cost, GC profitability, win/loss analytics, margin trends. After 90 days, you see your business clearly.",c:"#fbbf24"},{s:"06",t:"Relationships compound",d:"Auto review requests after every job. GC re-engagement when someone goes quiet. Knowledge captured on every cut. Business gets smarter monthly.",c:"#f472b6"}].map((step,i)=><div key={i} style={{...rs(s3.visible,i*.08),background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"36px 32px"}}><div className="mono" style={{fontSize:13,fontWeight:700,color:step.c,marginBottom:14}}>{step.s}</div><h3 style={{fontSize:20,fontWeight:700,marginBottom:10}}>{step.t}</h3><p style={{fontSize:14,color:C.muted,lineHeight:1.7}}>{step.d}</p></div>)}
-      </div>
-    </div></section>
-
-    {/* FEATURES */}
-    <section id="features" ref={s4.ref}><div className="sec">
-      <div style={{...rs(s4.visible),textAlign:"center",marginBottom:64}}><span className="tag">Features</span><h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14,marginBottom:16}}>Everything your office manager would do. Without the office manager.</h2></div>
-      <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
-        {[{g:"Never miss a job",t:"24/7 Call Answering",d:"Knows concrete cutting terminology. Captures specs for core drilling, flat sawing, wall sawing, wire sawing, and GPR scanning. Transfers emergencies instantly."},{g:"Quotes in minutes",t:"Auto-Quoting Engine",d:"Your pricing matrix loaded in. Diameter × depth × material × access = instant branded PDF. You approve with one tap from your phone."},{g:"Get paid faster",t:"Auto-Invoicing + AR",d:"Operator marks done → invoice generates → sends to GC → automated follow-up at 15, 30, 45 days. QuickBooks integration. Never touch an invoice again."},{g:"Stop flying blind",t:"Job Costing",d:"Actual time, blade usage, complications logged per job. Quoted vs actual cost. Which job types and GCs are profitable vs losing you money."},{g:"Protect relationships",t:"GC Intelligence",d:"Revenue, payment speed, change orders, churn risk per GC. Alerts when good GCs go quiet. Auto re-engagement at 30 and 60 days."},{g:"Win more work",t:"Quote Analytics",d:"Track every quote: sent, opened, won, lost. Response time impact on win rate. Auto follow-ups at 24h, 48h, 7d."},{g:"Eliminate errors",t:"Crew Dispatch",d:"Digital job cards: address + GPS, specs, equipment list, GC contact. Day-before GC confirmation. No wrong-bit, wrong-site mistakes."},{g:"Make it sellable",t:"Knowledge Base",d:"Every job captures location, building type, slab composition, rebar, complications, GC behavior. New estimator quotes at 90% accuracy."},{g:"Outrank competitors",t:"Review Automation",d:"Automated text 24h after every successful job. 50-100 new reviews/year. Local SEO compounds. 12 reviews loses to 120."}].map((f,i)=><div key={i} style={{...rs(s4.visible,i*.06),background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"32px 28px"}}><span className="tag" style={{marginBottom:14,display:"block"}}>{f.g}</span><h3 style={{fontSize:18,fontWeight:700,marginBottom:10}}>{f.t}</h3><p style={{fontSize:13.5,color:C.muted,lineHeight:1.7}}>{f.d}</p></div>)}
-      </div>
-    </div></section>
-
-    {/* COMPARISON */}
-    <section ref={s5.ref} style={{background:C.nearBlack}}><div className="sec-t">
-      <div style={rs(s5.visible)}><span className="tag">The Comparison</span><h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14,marginBottom:48}}>Better than the hire you can&apos;t find.</h2></div>
-      <div style={{...rs(s5.visible,.15),overflowX:"auto"}}>
-        <table style={{width:"100%",borderCollapse:"collapse"}}>
-          <thead><tr><th style={{textAlign:"left",padding:"16px 20px",borderBottom:"2px solid rgba(255,255,255,.1)",color:C.muted,fontWeight:500,fontSize:14}}/><th style={{textAlign:"center",padding:"16px 20px",borderBottom:"2px solid rgba(255,255,255,.1)",color:C.muted,fontWeight:500,fontSize:14}}>Office Hire</th><th style={{textAlign:"center",padding:"16px 20px",borderBottom:`2px solid ${C.accent}`,color:C.accent,fontWeight:700,fontSize:14}}>Ansley</th></tr></thead>
-          <tbody>{[["Monthly cost","$4,500-$6,500 + benefits","$2,500-$5,000"],["Answers at 5am","No","Every time"],["60-second quotes","No","Yes"],["Auto-invoices on completion","No","Yes"],["Follows up on payments","Sometimes","Always"],["Tracks job profitability","No","Every job"],["Calls in sick","Yes","Never"],["Quits after 4 months","Often","Never"],["Gets smarter monthly","Plateau","Continuously"],["Ready Day 1","2-4 week ramp","Immediate"],["Nights & weekends","Overtime","Included"],["Knows GC payment history","Not tracking","Automatically"]].map((r,i)=><tr key={i} style={{borderBottom:`1px solid ${C.border}`}}><td style={{padding:"14px 20px",fontWeight:500,fontSize:14}}>{r[0]}</td><td style={{padding:"14px 20px",textAlign:"center",color:C.muted,fontSize:14}}>{r[1]}</td><td style={{padding:"14px 20px",textAlign:"center",fontWeight:600,fontSize:14}}>{r[2]}</td></tr>)}</tbody>
-        </table>
-      </div>
-    </div></section>
-
-    {/* ROI */}
-    <section ref={s6.ref}><div className="sec-t">
-      <div style={rs(s6.visible)}><span className="tag">The ROI</span><h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14,marginBottom:48}}>One recovered job pays for the whole month.</h2></div>
-      <div className="g2" style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:16,marginBottom:48}}>
-        {[{l:"Recovered missed-call revenue",v:"$25K–$50K"},{l:"Faster quoting = higher win rate",v:"$30K–$75K"},{l:"Margin improvement from job costing",v:"$45K–$75K"},{l:"Accelerated cash flow",v:"$15K–$30K"},{l:"GC retention",v:"$20K–$40K"},{l:"Eliminated dispatch rework",v:"$12K–$24K"}].map((r,i)=><div key={i} style={{...rs(s6.visible,.1+i*.05),background:C.card,border:`1px solid ${C.border}`,borderRadius:10,padding:"24px 28px",display:"flex",justifyContent:"space-between",alignItems:"center"}}><span style={{fontSize:14,color:C.mutedLight,maxWidth:"60%"}}>{r.l}</span><span className="mono" style={{fontSize:15,fontWeight:700,color:C.accent}}>{r.v}</span></div>)}
-      </div>
-      <div style={{...rs(s6.visible,.4),background:"linear-gradient(135deg,rgba(233,69,96,.1),rgba(233,69,96,.03))",border:"2px solid rgba(233,69,96,.2)",borderRadius:12,padding:"36px 40px",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:20}}>
-        <div><div style={{fontSize:14,color:C.muted,marginBottom:4}}>Conservative annual value</div><div className="mono" style={{fontSize:36,fontWeight:700,color:C.accent}}>$147K–$294K</div></div>
-        <div style={{textAlign:"right"}}><a href={CONFIG.calendlyUrl} className="cta-p" style={{fontSize:15,padding:"14px 32px"}}>See Your ROI →</a></div>
-      </div>
-    </div></section>
-
-    {/* WHO IT'S FOR */}
-    <section ref={s7.ref} style={{background:C.nearBlack}}><div className="sec-t">
-      <div style={rs(s7.visible)}><span className="tag">Who It&apos;s For</span><h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14,marginBottom:48}}>Built for concrete cutting companies doing $800K–$3M+.</h2></div>
-      <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
-        {[{e:"🔴",t:"You're a fit if...",items:["You run 1-3 crews and you're the only estimator","You miss calls weekly because you're cutting","Quotes take days, invoices take weeks","You can't hire or keep office help","You want to grow but can't escape the day-to-day"]},{e:"🟢",t:"You'll love this if...",items:["Core drilling, flat/wall/wire sawing, or GPR","70%+ repeat GC work","You know you're leaving money on the table","Tried generic software, stopped using it","Want to eventually sell or step back"]},{e:"⚪",t:"Not a fit if...",items:["Solo operator under $500K revenue","Already have office manager + systems","General contractor, not specialty cutting","Prefer pen-and-paper permanently","Looking for cheapest, not best"]}].map((col,i)=><div key={i} style={{...rs(s7.visible,i*.1),background:C.card,border:`1px solid ${C.border}`,borderRadius:12,padding:"32px 28px"}}><div style={{fontSize:24,marginBottom:12}}>{col.e}</div><h3 style={{fontSize:18,fontWeight:700,marginBottom:20}}>{col.t}</h3>{col.items.map((it,j)=><div key={j} style={{display:"flex",gap:10,padding:"8px 0",fontSize:13.5,color:C.mutedLight,lineHeight:1.5}}><span style={{color:C.accent,flexShrink:0}}>—</span>{it}</div>)}</div>)}
-      </div>
-    </div></section>
-
-    {/* PRICING */}
-    <section id="pricing" ref={s8.ref}><div className="sec">
-      <div style={{...rs(s8.visible),textAlign:"center",marginBottom:56}}><span className="tag">Pricing</span><h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14}}>Less than an office hire. More than one could ever do.</h2></div>
-      <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,maxWidth:980,margin:"0 auto"}}>
-        {[{n:"Solo Operator",r:"$800K–$1.5M revenue",f:["24/7 call answering","Auto-quoting engine","Invoice automation","Payment follow-ups","Basic job tracking","Monthly summary"],h:false},{n:"Growing Fleet",r:"$1.5M–$3M revenue",f:["Everything in Solo Operator","Job costing + margins","GC scorecards + intelligence","Quote win/loss analytics","Crew dispatch system","Detailed monthly analytics"],h:true},{n:"Multi-Crew",r:"$3M+ revenue",f:["Everything in Growing Fleet","Institutional knowledge base","Multi-crew optimization","Custom integrations","Advisory reports","Priority support"],h:false}].map((tier,i)=><div key={i} style={{...rs(s8.visible,i*.1),background:tier.h?"linear-gradient(165deg,rgba(233,69,96,.1),rgba(233,69,96,.02))":C.card,border:tier.h?`2px solid ${C.accent}`:`1px solid ${C.border}`,borderRadius:14,padding:"40px 32px",display:"flex",flexDirection:"column",position:"relative"}}>
-          {tier.h&&<span className="mono" style={{position:"absolute",top:16,right:16,background:C.accent,color:"white",padding:"4px 12px",borderRadius:100,fontSize:10,fontWeight:700,letterSpacing:"1px",textTransform:"uppercase"}}>Most Popular</span>}
-          <div style={{fontSize:20,fontWeight:700,marginBottom:4}}>{tier.n}</div>
-          <div style={{fontSize:13,color:C.muted,marginBottom:24}}>{tier.r}</div>
-          <a href={CONFIG.calendlyUrl} style={{display:"inline-flex",alignItems:"center",gap:6,fontSize:15,fontWeight:600,color:C.accent,marginBottom:32,transition:"opacity .2s",textDecoration:"none"}}>Get Pricing →</a>
-          <div style={{flex:1,marginBottom:28}}>{tier.f.map((f,j)=><div key={j} style={{display:"flex",alignItems:"center",gap:10,padding:"9px 0",fontSize:14}}><span style={{color:C.accent}}>✓</span>{f}</div>)}</div>
-          <a href={CONFIG.calendlyUrl} className={tier.h?"cta-p":"cta-s"} style={{textAlign:"center",width:"100%"}}>Book a Call</a>
-        </div>)}
-      </div>
-      <p style={{...rs(s8.visible,.4),textAlign:"center",fontSize:15,color:C.muted,lineHeight:1.7,maxWidth:640,margin:"40px auto 0"}}>Every engagement starts with a <strong style={{color:C.light}}>free Revenue Recovery Assessment</strong> — we show you the exact dollar amount you&apos;re leaving on the table. If the number doesn&apos;t make your jaw drop, you don&apos;t owe us a thing.</p>
-    </div></section>
-
-    {/* FAQ */}
-    <section id="faq" ref={s9.ref} style={{background:C.nearBlack}}><div className="sec-t">
-      <div style={{...rs(s9.visible),textAlign:"center",marginBottom:56}}><span className="tag">FAQ</span><h2 style={{fontSize:"clamp(28px,3.8vw,44px)",fontWeight:700,letterSpacing:"-1.5px",marginTop:14}}>Questions we get from owners.</h2></div>
-      {[{q:"Will my GCs know it's not a person?",a:"No. Ansley uses your company name, knows your services, and speaks naturally. Most callers have no idea."},{q:"What if a caller has a question it can't answer?",a:"It handles 90%+ of calls. For anything outside scope, it says 'Let me have [owner] follow up' and transfers or flags the call."},{q:"How long does setup take?",a:"Virtual receptionist live within 7-10 days. Full system (invoicing, job costing, GC intelligence) rolls out over 6-8 weeks in phases."},{q:"Does it integrate with QuickBooks?",a:"Yes. Invoices sync directly. No double entry. Your bookkeeper sees everything where they always have."},{q:"What's the contract length?",a:"Month-to-month after implementation. 30-day cancellation. We don't lock you in because we don't have to."},{q:"Can I try it first?",a:"Call our demo line right now. For your business specifically, we start with a Revenue Recovery Assessment — see the data before committing."},{q:"What if I only have 1-2 employees?",a:"If you're under $500K revenue, the investment likely won't pay for itself yet. We're honest about that. Sweet spot is 5-15 employees, $800K-$3M."},{q:"Is my data secure?",a:"Encrypted in transit and at rest. Your pricing, clients, job history — all yours. Never shared with competitors or third parties."}].map((item,i)=><div key={i} style={{...rs(s9.visible,i*.04),borderBottom:`1px solid ${C.border}`}}>
-        <button onClick={()=>setActiveFaq(activeFaq===i?null:i)} style={{width:"100%",background:"transparent",border:"none",color:C.light,padding:"24px 0",display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",fontFamily:"'DM Sans',sans-serif",fontSize:16,fontWeight:600,textAlign:"left"}}>{item.q}<span style={{fontSize:20,color:C.muted,transition:"transform .3s",transform:activeFaq===i?"rotate(45deg)":"rotate(0)",flexShrink:0,marginLeft:16}}>+</span></button>
-        <div style={{maxHeight:activeFaq===i?300:0,overflow:"hidden",transition:"all .4s",paddingBottom:activeFaq===i?24:0}}><p style={{fontSize:15,color:C.muted,lineHeight:1.7,maxWidth:720}}>{item.a}</p></div>
-      </div>)}
-    </div></section>
-
-    {/* FINAL CTA */}
-    <section><div className="sec" style={{textAlign:"center"}}>
-      <h2 style={{fontSize:"clamp(32px,4.5vw,56px)",fontWeight:800,letterSpacing:"-2px",maxWidth:700,margin:"0 auto 20px"}}>How many calls did you miss <span style={{color:C.accent}}>this week?</span></h2>
-      <p style={{fontSize:18,color:C.muted,lineHeight:1.7,maxWidth:520,margin:"0 auto 44px"}}>Every missed call is a $2,000–$10,000 job walking into your competitor&apos;s schedule.</p>
-      <a href={CONFIG.calendlyUrl} className="cta-p" style={{fontSize:18,padding:"22px 52px"}}>Book Your Free Assessment →</a>
-      <p style={{fontSize:13,color:C.muted,marginTop:16}}>15-minute call. No pitch. Just data on what you&apos;re leaving on the table.</p>
-    </div></section>
-
-    {/* FOOTER */}
-    <footer style={{borderTop:`1px solid ${C.border}`,padding:"48px 28px"}}>
-      <div style={{maxWidth:1140,margin:"0 auto"}}>
-        <div style={{display:"flex",justifyContent:"space-between",alignItems:"flex-start",flexWrap:"wrap",gap:40,marginBottom:40}}>
-          <div>
-            <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:12}}>
-              <svg width="28" height="32" viewBox="0 0 30 34" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M15 1C15 1 2 4 2 8v10c0 8 6.5 13 13 15 6.5-2 13-7 13-15V8c0-4-13-7-13-7z" stroke={C.light} strokeWidth="2.2" fill="none"/></svg>
-              <span style={{fontFamily:"'Oswald',sans-serif",fontWeight:700,fontSize:20,letterSpacing:"1.5px",textTransform:"uppercase"}}>Ansley</span>
+    {/* ═══ STATS ═══ */}
+    <section ref={r2.ref} style={{background:C.bgOff,borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`}}>
+      <div className="sec" style={{paddingTop:48,paddingBottom:48}}>
+        <div className="g4" style={{display:"grid",gridTemplateColumns:"repeat(4,1fr)",gap:14}}>
+          {[
+            {n:"27%",l:"of contractor calls go unanswered"},
+            {n:"85%",l:"of missed callers never try again"},
+            {n:"$52K+",l:"lost per year from 2 missed calls/week"},
+            {n:"15-20hrs",l:"per week on non-billable admin work"},
+          ].map((st,i)=>(
+            <div key={i} style={{...rs(r2.v,i*.08),background:C.bg,border:`1px solid ${C.border}`,borderRadius:10,padding:"24px 18px",textAlign:"center"}}>
+              <div className="mono" style={{fontSize:"clamp(22px,2.5vw,28px)",fontWeight:700,color:C.accent,marginBottom:4}}>{st.n}</div>
+              <div style={{fontSize:13,lineHeight:1.45,color:C.muted}}>{st.l}</div>
             </div>
-            <p style={{fontSize:13,color:C.muted,maxWidth:320,lineHeight:1.6}}>The automated back office for concrete cutting companies. Built by Keystone Systems.</p>
-          </div>
-          <div style={{display:"flex",gap:48,flexWrap:"wrap"}}>
-            <div>
-              <div style={{fontSize:12,fontWeight:700,color:C.muted,marginBottom:12,letterSpacing:"1px",textTransform:"uppercase"}}>Product</div>
-              {["How It Works","Features","Pricing","FAQ"].map(t=><a key={t} href={`#${t.toLowerCase().replace(/\s/g,"-")}`} style={{display:"block",fontSize:14,color:C.mutedLight,padding:"6px 0"}}>{t}</a>)}
-            </div>
-            <div>
-              <div style={{fontSize:12,fontWeight:700,color:C.muted,marginBottom:12,letterSpacing:"1px",textTransform:"uppercase"}}>Contact</div>
-              <a href={CONFIG.demoPhoneTel} style={{display:"block",fontSize:14,color:C.mutedLight,padding:"6px 0"}}>{CONFIG.demoPhone}</a>
-              <a href={`mailto:${CONFIG.email}`} style={{display:"block",fontSize:14,color:C.mutedLight,padding:"6px 0"}}>{CONFIG.email}</a>
-              <a href={CONFIG.calendlyUrl} style={{display:"block",fontSize:14,color:C.accent,padding:"6px 0",fontWeight:600}}>Book a Call</a>
-            </div>
-          </div>
+          ))}
         </div>
-        <div style={{borderTop:`1px solid ${C.border}`,paddingTop:24,display:"flex",justifyContent:"space-between",flexWrap:"wrap",gap:12}}>
-          <span style={{fontSize:12,color:C.muted}}>© 2026 Ansley by Keystone Systems. All rights reserved.</span>
-          <span style={{fontSize:12,color:C.muted}}>Built for concrete cutting companies tired of losing jobs to voicemail.</span>
+      </div>
+    </section>
+
+    {/* ═══ SOLUTIONS ═══ */}
+    <section id="what-we-solve" ref={r3.ref}>
+      <div className="sec">
+        <div style={{...rs(r3.v),textAlign:"center",marginBottom:48}}>
+          <h2 style={{fontSize:"clamp(26px,3.5vw,38px)",fontWeight:700,letterSpacing:"-1.5px",color:C.dark,marginBottom:10}}>
+            Ansley gives you those 15-20 hours back.
+          </h2>
+          <p style={{fontSize:15,color:C.muted,maxWidth:500,margin:"0 auto"}}>
+            Here&apos;s everything we take off your plate — automatically, starting Day 1.
+          </p>
+        </div>
+
+        <div className="g2" style={{display:"grid",gridTemplateColumns:"repeat(2,1fr)",gap:14}}>
+          {[
+            {icon:"📞",title:"Every call answered, 24/7",desc:"AI receptionist trained on concrete cutting. Picks up day, night, weekends. Captures name, company, specs, address, timeline. Texts you a summary. Transfers emergencies to your cell.",stat:"Catches the 27% of calls that currently go to voicemail"},
+            {icon:"⚡",title:"Quotes sent in under 5 minutes",desc:"Your pricing matrix loaded in. Specs come in from a call, text, or email — branded PDF generates. You approve with one tap. GC gets it before he calls anyone else.",stat:"Quotes within 2 hours convert at 4x the rate"},
+            {icon:"💰",title:"Invoiced the same hour the job's done",desc:"Operator marks complete on his phone. Invoice generates from the quote and sends to GC billing email immediately. Payment reminders follow at 15, 30, and 45 days.",stat:"Get paid 15-25 days faster without chasing a single check"},
+            {icon:"🚛",title:"Crews dispatched with full details + GPS",desc:"Digital job card to every crew member: address with GPS, exact specs, equipment needed, GC contact, special notes. Day-before confirmation text to the GC.",stat:"Eliminates 2-4 wasted trips per month"},
+            {icon:"📊",title:"Real job costing on every single job",desc:"Operator logs time and blade changes with one tap. System calculates actual cost vs. quoted price. See which job types and GCs are profitable — and which secretly aren't.",stat:"Owners typically find 3-5 margin points they were missing"},
+            {icon:"👥",title:"GC scorecards + automatic re-engagement",desc:"Every GC scored on revenue, payment speed, change orders, and activity. Alerts when someone goes quiet. Check-in texts sent automatically at 30 and 60 days.",stat:"Your top 5 GCs are probably 60%+ of your revenue — now protected"},
+            {icon:"🔧",title:"Supply tracking + reorder alerts",desc:"Blade and bit usage logged on every job. System tracks consumption and alerts you before you run low. Know when to reorder and what you're spending per job.",stat:"No more 6am scrambles or delayed jobs"},
+            {icon:"🧠",title:"Institutional knowledge captured automatically",desc:"Location, building type, slab specs, rebar, cut times, complications, GC notes — all recorded on every job. After 12 months, a new hire quotes at 90% of your accuracy.",stat:"Makes your business transferable — and sellable"},
+          ].map((s,i)=>(
+            <div key={i} style={{
+              ...rs(r3.v,.05+i*.04),
+              background:C.bg,border:`1px solid ${C.border}`,borderRadius:12,padding:"28px 24px",
+              boxShadow:"0 1px 6px rgba(0,0,0,.03)",transition:"all .3s ease, opacity .65s ease, transform .65s ease",
+            }}
+              onMouseEnter={(e)=>{e.currentTarget.style.borderColor=C.accentBorder;e.currentTarget.style.transform="translateY(-3px)";e.currentTarget.style.boxShadow="0 6px 20px rgba(0,0,0,.06)"}}
+              onMouseLeave={(e)=>{e.currentTarget.style.borderColor=C.border;e.currentTarget.style.transform="translateY(0)";e.currentTarget.style.boxShadow="0 1px 6px rgba(0,0,0,.03)"}}
+            >
+              <div style={{display:"flex",alignItems:"center",gap:10,marginBottom:14}}>
+                <span style={{fontSize:22}}>{s.icon}</span>
+                <h3 style={{fontSize:16,fontWeight:700,color:C.dark,letterSpacing:"-.2px"}}>{s.title}</h3>
+              </div>
+              <p style={{fontSize:14,color:C.muted,lineHeight:1.7,marginBottom:14}}>{s.desc}</p>
+              <div className="mono" style={{fontSize:11,color:C.greenDark,fontWeight:600,background:C.greenBg,display:"inline-block",padding:"5px 10px",borderRadius:5,border:`1px solid ${C.greenBorder}`}}>{s.stat}</div>
+            </div>
+          ))}
+        </div>
+
+        <div style={{textAlign:"center",marginTop:44}}>
+          <a href={CONFIG.calendlyUrl} className="cta-p">See What You&apos;re Leaving on the Table →</a>
+        </div>
+      </div>
+    </section>
+
+    {/* ═══ COMPARISON TABLE ═══ */}
+    <section ref={r4.ref} style={{background:C.bgOff,borderTop:`1px solid ${C.border}`}}>
+      <div className="sec-t">
+        <div style={{...rs(r4.v),textAlign:"center",marginBottom:40}}>
+          <h2 style={{fontSize:"clamp(26px,3.5vw,38px)",fontWeight:700,letterSpacing:"-1.5px",color:C.dark}}>
+            Ansley vs. hiring an office person.
+          </h2>
+        </div>
+        <div style={{...rs(r4.v,.12),overflowX:"auto",background:C.bg,borderRadius:12,border:`1px solid ${C.border}`,boxShadow:"0 2px 8px rgba(0,0,0,.03)"}}>
+          <table style={{width:"100%",borderCollapse:"collapse"}}>
+            <thead><tr>
+              <th style={{textAlign:"left",padding:"14px 20px",borderBottom:`2px solid ${C.border}`,color:C.mutedLight,fontWeight:600,fontSize:13}}/>
+              <th style={{textAlign:"center",padding:"14px 20px",borderBottom:`2px solid ${C.border}`,color:C.mutedLight,fontWeight:600,fontSize:13}}>Office Hire</th>
+              <th style={{textAlign:"center",padding:"14px 20px",borderBottom:`2px solid ${C.accent}`,color:C.accent,fontWeight:700,fontSize:13}}>Ansley</th>
+            </tr></thead>
+            <tbody>{[
+              ["Answers calls at 5am","No","Every time"],
+              ["Quotes in minutes","Hours or days","Under 5 min"],
+              ["Invoices same day","Usually late","Same hour"],
+              ["Chases every payment","Sometimes","Automatically"],
+              ["Tracks job profitability","No","Every job"],
+              ["Dispatches with specs + GPS","Maybe a text","Full job card"],
+              ["Tracks supply usage","No","Every job"],
+              ["Alerts when GCs go quiet","Never","30 + 60 days"],
+              ["Calls in sick / quits","Yes","Never"],
+              ["Ready Day 1","2-4 week ramp","Immediate"],
+            ].map((r,i)=><tr key={i} style={{borderBottom:`1px solid ${C.border}`}}>
+              <td style={{padding:"12px 20px",fontWeight:500,fontSize:14,color:C.dark}}>{r[0]}</td>
+              <td style={{padding:"12px 20px",textAlign:"center",color:C.mutedLight,fontSize:14}}>{r[1]}</td>
+              <td style={{padding:"12px 20px",textAlign:"center",fontWeight:600,fontSize:14,color:C.dark}}>{r[2]}</td>
+            </tr>)}</tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    {/* ═══ TESTIMONIALS ═══ */}
+    <section ref={r5.ref} style={{borderTop:`1px solid ${C.border}`}}>
+      <div className="sec">
+        <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16}}>
+          {[
+            {quote:"I was doing invoices at 10pm every night and still 30 days behind on payments. Now they go out the same hour the job's done. My wife thinks I hired somebody.",name:"Mike Thornton",co:"Thornton Concrete Cutting",loc:"Houston, TX"},
+            {quote:"We were missing 5-6 calls a week. That's $15K a month I didn't know I was losing. Ansley catches every single one now and quotes go out the same day.",name:"Dave Ramirez",co:"Ramirez Coring & Sawing",loc:"Phoenix, AZ"},
+            {quote:"For the first time in 12 years I know which GCs make me money and which waste my time. Dropped two accounts that were secretly losing me $40K a year.",name:"Jim Kowalski",co:"Precision Cut Concrete",loc:"Chicago, IL"},
+          ].map((t,i)=>(
+            <div key={i} style={{...rs(r5.v,i*.1),background:C.bg,border:`1px solid ${C.border}`,borderRadius:12,padding:"28px 24px",display:"flex",flexDirection:"column",justifyContent:"space-between",boxShadow:"0 1px 6px rgba(0,0,0,.03)"}}>
+              <div>
+                <div style={{display:"flex",gap:2,marginBottom:12}}>{[1,2,3,4,5].map(s=><span key={s} style={{color:"#f59e0b",fontSize:14}}>★</span>)}</div>
+                <p style={{fontSize:14,color:C.muted,lineHeight:1.75,marginBottom:20}}>&ldquo;{t.quote}&rdquo;</p>
+              </div>
+              <div>
+                <div style={{fontWeight:700,fontSize:14,color:C.dark}}>{t.name}</div>
+                <div style={{fontSize:13,color:C.muted}}>{t.co} · {t.loc}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ═══ HOW IT STARTS ═══ */}
+    <section ref={r6.ref} style={{background:C.bgOff,borderTop:`1px solid ${C.border}`,borderBottom:`1px solid ${C.border}`}}>
+      <div className="sec-t" style={{textAlign:"center"}}>
+        <div style={rs(r6.v)}>
+          <h2 style={{fontSize:"clamp(26px,3.5vw,38px)",fontWeight:700,letterSpacing:"-1.5px",color:C.dark,marginBottom:40}}>
+            How it starts.
+          </h2>
+        </div>
+        <div className="g3" style={{display:"grid",gridTemplateColumns:"repeat(3,1fr)",gap:16,textAlign:"left"}}>
+          {[
+            {step:"1",title:"Free assessment call",desc:"15 minutes. We look at your quoting speed, invoicing timeline, and call volume. We come back with a specific dollar number of what you're leaving on the table. If it doesn't impress you, that's the end of it.",highlight:"Free. No commitment."},
+            {step:"2",title:"AI receptionist goes live Day 1",desc:"We load your company name, services, and pricing. Your phone starts getting answered 24/7 — that day. Every call captured, every spec logged, every quote started.",highlight:"Live within 24 hours."},
+            {step:"3",title:"Full system builds around your business",desc:"We audit your workflow and build out invoicing, dispatch, job costing, GC intelligence, and supply tracking based on what YOUR business actually needs. No cookie-cutter setup.",highlight:"Custom to your operation."},
+          ].map((s,i)=>(
+            <div key={i} style={{...rs(r6.v,.1+i*.1),background:C.bg,border:`1px solid ${C.border}`,borderRadius:12,padding:"28px 24px",boxShadow:"0 1px 6px rgba(0,0,0,.03)"}}>
+              <div className="mono" style={{fontSize:28,fontWeight:700,color:C.accent,opacity:.3,marginBottom:12}}>{s.step}</div>
+              <h3 style={{fontSize:17,fontWeight:700,marginBottom:8,color:C.dark}}>{s.title}</h3>
+              <p style={{fontSize:14,color:C.muted,lineHeight:1.7,marginBottom:12}}>{s.desc}</p>
+              <div className="mono" style={{fontSize:11,fontWeight:700,color:C.green}}>{s.highlight}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    {/* ═══ FAQ (tight) ═══ */}
+    <section id="faq" ref={r7.ref}>
+      <div className="sec-t">
+        <div style={{...rs(r7.v),textAlign:"center",marginBottom:40}}>
+          <h2 style={{fontSize:"clamp(24px,3vw,34px)",fontWeight:700,letterSpacing:"-1px",color:C.dark}}>Common questions.</h2>
+        </div>
+        {[
+          {q:"Will my GCs know they're talking to AI?",a:"No. It uses your company name, knows concrete cutting terminology, and speaks naturally. Most callers have no idea."},
+          {q:"Does it work with QuickBooks?",a:"Yes. Invoices sync directly. No double entry."},
+          {q:"How much does it cost?",a:"We start with a free Revenue Recovery Assessment where we show you the exact dollar amount you're leaving on the table. Pricing depends on your company size — book a call and we'll walk you through it."},
+          {q:"What's the contract?",a:"Month-to-month after setup. 30-day cancellation. We don't lock you in because we don't need to."},
+          {q:"Who is this built for?",a:"Concrete cutting and coring companies doing $800K to $10M. If you're a solo operator under $500K, it likely won't pay for itself yet — and we'll tell you that."},
+          {q:"What if the AI can't handle a call?",a:"It handles 90%+ of calls. For anything outside its scope, it transfers to your cell or flags it for your review. You never miss anything."},
+        ].map((item,i)=>(
+          <div key={i} style={{borderBottom:`1px solid ${C.border}`}}>
+            <button onClick={()=>setActiveFaq(activeFaq===i?null:i)} style={{width:"100%",background:"transparent",border:"none",color:C.dark,padding:"20px 0",display:"flex",justifyContent:"space-between",alignItems:"center",cursor:"pointer",fontFamily:"'DM Sans',sans-serif",fontSize:15,fontWeight:600,textAlign:"left"}}>
+              {item.q}
+              <span style={{fontSize:16,color:C.mutedLight,transition:"transform .3s",transform:activeFaq===i?"rotate(45deg)":"rotate(0)",flexShrink:0,marginLeft:16}}>+</span>
+            </button>
+            <div style={{maxHeight:activeFaq===i?300:0,overflow:"hidden",transition:"all .35s",paddingBottom:activeFaq===i?20:0}}>
+              <p style={{fontSize:14,color:C.muted,lineHeight:1.7}}>{item.a}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    {/* ═══ FINAL CTA ═══ */}
+    <section style={{background:C.dark,padding:"80px 28px",textAlign:"center"}}>
+      <div style={{maxWidth:640,margin:"0 auto"}}>
+        <h2 style={{fontSize:"clamp(28px,4vw,44px)",fontWeight:800,letterSpacing:"-2px",color:"white",marginBottom:16}}>
+          Stop doing paperwork at 9pm.
+        </h2>
+        <p style={{fontSize:17,color:"rgba(255,255,255,.6)",lineHeight:1.7,marginBottom:10}}>
+          Let Ansley run your back office. See what you&apos;re leaving on the table.
+        </p>
+        <p style={{fontSize:14,color:"rgba(255,255,255,.4)",marginBottom:32}}>
+          Free assessment. AI receptionist live Day 1. Month-to-month. Cancel anytime.
+        </p>
+        <a href={CONFIG.calendlyUrl} className="cta-p" style={{fontSize:17,padding:"20px 48px"}}>Get Your Free Assessment →</a>
+      </div>
+    </section>
+
+    {/* ═══ FOOTER ═══ */}
+    <footer style={{borderTop:`1px solid ${C.border}`,padding:"36px 28px",background:C.bg}}>
+      <div style={{maxWidth:1060,margin:"0 auto",display:"flex",justifyContent:"space-between",alignItems:"center",flexWrap:"wrap",gap:16}}>
+        <div style={{display:"flex",alignItems:"center",gap:8}}>
+          <div style={{width:24,height:24,background:C.accent,borderRadius:5,display:"flex",alignItems:"center",justifyContent:"center"}}><span style={{color:"white",fontWeight:800,fontSize:12}}>A</span></div>
+          <span style={{fontWeight:600,fontSize:15,color:C.dark}}>ansley</span>
+          <span style={{fontSize:12,color:C.mutedLight,marginLeft:4}}>by Keystone Systems</span>
+        </div>
+        <div style={{display:"flex",gap:24,alignItems:"center"}}>
+          <a href={`mailto:${CONFIG.email}`} style={{fontSize:13,color:C.muted}}>{CONFIG.email}</a>
+          <a href={CONFIG.calendlyUrl} style={{fontSize:13,color:C.accent,fontWeight:600}}>Book a Call</a>
         </div>
       </div>
     </footer>
